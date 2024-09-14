@@ -4,7 +4,11 @@ matchers = "https://github.com/kritzcreek/motoko-matchers#v1.2.0"
 accountid = "https://github.com/aviate-labs/principal.mo#main"
 hex = "https://github.com/letmejustputthishere/motoko-hex#master"
 canistergeek = "https://github.com/usergeek/canistergeek-ic-motoko#v0.0.3"
-uuid = "https://github.com/aviate-labs/uuid.mo#v0.2.0"
+uuid = "1.0.0"
+prng = "0.0.5"
+vector = "0.4.0"
+map = "9.0.1"
+"json.mo" = "0.1.2"
 
 [dev-dependencies]
 test = "2.0.0"
