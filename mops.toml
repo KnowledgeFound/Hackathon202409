@@ -9,6 +9,8 @@ prng = "0.0.5"
 vector = "0.4.0"
 map = "9.0.1"
 "json.mo" = "0.1.2"
+icrc1-types = "1.0.0"
+sha2 = "0.1.0"
 
 [dev-dependencies]
 test = "2.0.0"
