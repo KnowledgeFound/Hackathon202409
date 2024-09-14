@@ -25,7 +25,6 @@ import HTTP "./Http";
 import Stoic "./EXT/Stoic";
 
 import Protocol "./Protocol";
-import Testable "mo:matchers/Testable";
 import Blob "mo:base/Blob";
 
 
