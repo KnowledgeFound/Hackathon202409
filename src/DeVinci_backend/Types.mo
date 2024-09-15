@@ -142,7 +142,7 @@ module {
   };
 
   public type SubmittedAnswer = {
-    questionId : Nat;
+    questionId : Text;
     option : Nat;
   };
 

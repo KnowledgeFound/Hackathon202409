@@ -93,7 +93,7 @@ module {
     Nat64.fromNat(num);
   };
 
-  public func hashText(v: Text) : Blob {
+  public func hashText(v : Text) : Text {
     switch (Text.decodeUtf8(Sha256.fromBlob(#sha256, Text.encodeUtf8(v)))) {
       case (null) {
         Debug.trap("Failed to hash text");
@@ -101,6 +101,89 @@ module {
       case (?t) {
         t;
       };
-    }
+    };
+  };
+
+  public func getOpenAiRunValue(body : JSON.JSON, runId : Text) : ?Text {
+    var value : ?Text = null;
+
+    switch (body) {
+      case (#Object(v)) {
+        label findData for ((k, v) in v.vals()) {
+          if (k == "data") {
+            switch (v) {
+              case (#Array(v)) {
+                for (i in v.vals()) {
+                  switch (i) {
+                    case (#Object(v)) {
+                      var foundRunId = false;
+                      label findRunId for ((k, v) in v.vals()) {
+                        if (k == "run_id") {
+                          switch (v) {
+                            case (#String(rid)) {
+                              if (rid == runId) {
+                                foundRunId := true;
+                              };
+                            };
+                            case (_) {};
+                          };
+                          break findRunId;
+                        };
+                      };
+                      if (foundRunId) {
+                        label findContent for ((k, v) in v.vals()) {
+                          if (k == "content") {
+                            switch (v) {
+                              case (#Array(items)) {
+                                if (Array.size(items) != 0) {
+                                  let firstItem = items[0];
+                                  switch (firstItem) {
+                                    case (#Object(v)) {
+                                      label findText for ((k, v) in v.vals()) {
+                                        if (k == "text") {
+                                          switch (v) {
+                                            case (#Object(v)) {
+                                              label findValue for ((k, v) in v.vals()) {
+                                                if (k == "value") {
+                                                  switch (v) {
+                                                    case (#String(t)) {
+                                                      value := ?t;
+                                                    };
+                                                    case (_) {};
+                                                  };
+                                                  break findValue;
+                                                };
+                                              };
+                                            };
+                                            case (_) {};
+                                          };
+                                          break findText;
+                                        };
+                                      };
+                                    };
+                                    case (_) {};
+                                  };
+                                };
+                              };
+                              case (_) {};
+                            };
+                            break findContent;
+                          };
+                        };
+                      };
+                    };
+                    case (_) {};
+                  };
+                };
+              };
+              case (_) {};
+            };
+          };
+        };
+      };
+      case (_) {};
+    };
+
+    value;
   };
 };
