@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import UsernameModal from '../components/UserNameMidel.svelte'
+    // import UsernameModal from '../components/UserNameMidel.svelte'
   
     let showModal = true;
     let username = '';
@@ -21,8 +21,8 @@
     bind:username
     on:close={handleModalClose}
     on:submit={handleUsernameSubmit}
-  />
-   -->
+  /> -->
+  
   <div class="main-content">
     <h1>Welcome, {username ? username : 'Guest'}</h1>
     <!-- Your main page content goes here -->
