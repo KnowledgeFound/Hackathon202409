@@ -2,19 +2,12 @@ import UUID "mo:uuid/UUID";
 import Source "mo:uuid/async/SourceV4";
 import Sha256 "mo:sha2/Sha256";
 import Text "mo:base/Text";
-import Nat32 "mo:base/Nat32";
-import Nat64 "mo:base/Nat64";
 import ICRC1 "mo:icrc1-types";
 import Array "mo:base/Array";
-import Blob "mo:base/Blob";
-import Nat8 "mo:base/Nat8";
-import Char "mo:base/Char";
-import Principal "mo:base/Principal";
 import Result "mo:base/Result";
 import JSON "mo:json.mo";
 import Types "Types";
 import Vector "mo:vector";
-import Debug "mo:base/Debug";
 
 module {
   type Result<A, B> = Result.Result<A, B>;
@@ -64,44 +57,11 @@ module {
     UUID.toText(await g.new());
   };
 
-  // Helper functions
-  public func textToNat(txt : Text) : Nat {
-    assert (txt.size() > 0);
-    let chars = txt.chars();
-
-    var num : Nat = 0;
-    for (v in chars) {
-      let charToNum = Nat32.toNat(Char.toNat32(v) -48);
-      assert (charToNum >= 0 and charToNum <= 9);
-      num := num * 10 + charToNum;
-    };
-
-    num;
-  };
-
-  public func textToNat64(txt : Text) : Nat64 {
-    assert (txt.size() > 0);
-    let chars = txt.chars();
-
-    var num : Nat = 0;
-    for (v in chars) {
-      let charToNum = Nat32.toNat(Char.toNat32(v) -48);
-      assert (charToNum >= 0 and charToNum <= 9);
-      num := num * 10 + charToNum;
-    };
-
-    Nat64.fromNat(num);
-  };
-
   public func hashText(v : Text) : Text {
-    switch (Text.decodeUtf8(Sha256.fromBlob(#sha256, Text.encodeUtf8(v)))) {
-      case (null) {
-        Debug.trap("Failed to hash text");
-      };
-      case (?t) {
-        t;
-      };
-    };
+    let h = debug_show(Sha256.fromBlob(#sha256, Text.encodeUtf8(v)));
+    var out: Text = Text.replace(h, #char '\\', "");
+    let trimmed = Text.trim(out, #char '\"');
+    return Text.toLowercase(trimmed);
   };
 
   public func getOpenAiRunValue(body : JSON.JSON, runId : Text) : ?Text {
