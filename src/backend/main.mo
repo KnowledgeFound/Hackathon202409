@@ -155,6 +155,12 @@ shared ({ caller }) actor class Backend() {
     Vector.add(acls, p);
   };
 
+  // Add acls text
+  public shared ({ caller }) func addAclsText(p : Text) : () {
+    assert _isOwner(caller);
+    Vector.add(acls, Principal.fromText(p));
+  };
+
   // Remove acls
   public shared ({ caller }) func removeAcls(p : Principal) : async Result<(), ApiError> {
     assert _isOwner(caller);
