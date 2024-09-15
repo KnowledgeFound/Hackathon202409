@@ -204,14 +204,14 @@ shared ({ caller }) actor class Backend() {
 
   // Set api key
   public shared ({ caller }) func changeApiKey(apiKey : Text) : async Result<(), ApiError> {
-    if (not _isOwner(caller)) return #err(#Unauthorized);
+    if (not _isAllowed(caller)) return #err(#Unauthorized);
     API_KEY := apiKey;
     #ok();
   };
 
   // Set assistant id
   public shared ({ caller }) func setAssistantId(id : Text) : async Result<(), ApiError> {
-    if (not _isOwner(caller)) return #err(#Unauthorized);
+    if (not _isAllowed(caller)) return #err(#Unauthorized);
     ASSISTANT_ID := id;
     #ok();
   };
