@@ -1691,6 +1691,21 @@ shared ({ caller }) actor class Backend() {
 
   // AI-for-education experiences (Knowledge Foundation hackathon)
   var aiForEducationExperiencesStable : [Types.EducationExperience] = [
+    // Knowledge foundation entry
+    {
+      id = "knowledge-foundation";
+      title = "Knowledge Foundation Hackathon Entry";
+      creator = "Ayomide & Kezzy & Zeegaths";
+      shortDescription = "This was the entry we put in at the Knowledge Foundation hackathon";
+      longDescription = "It was the first AI for education experience we created and it's the inspiration for more solutions to come (including this hackathon). It's based on the a different approach than DeVinci is taking: run the AI model offchain making the experience faster on the user's device. It includes the UN anti-corruption resources as in-browser vector databases. As an extra, we added a assessment generation feature to create questions for the courses allowing the canister to mark user submitted assessments.";
+      note = "Give it a try and think about how to improve it :)";
+      isStandaloneApp = true;
+      standaloneAppUrl = ?"https://px7id-byaaa-aaaak-albiq-cai.icp0.io/";
+      experienceType = null;
+      aiModelIdentifier = null;
+      databaseToInclude = #None;
+      databaseIdentifier = null;
+    },
     // Oxford entry
     {
       id = "oxford";
