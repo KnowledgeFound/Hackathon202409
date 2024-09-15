@@ -1,8 +1,12 @@
-<script lang="ts">
-  import { Router, link, navigate } from 'svelte-spa-router';
- // import routes from './routes'; // Ensure this file correctly exports your routes
-  import logo from '../assets/devinci.svg';
-  import hero from '../assets/apple-touch-icon.png'; // Example image for hero section
+<script>
+  import logo from "../../../public/image8.png";
+  import hero from "../../../public/image9.png";
+  import vr from "../../../public/vr2.png"
+  import eye from "../../../public/image6.png"
+  // import '../index.scss';
+    // import { error } from 'console';
+    //import {goto} from ''
+ // import { authenticateWithInternetIdentity } from '../routes/services/auth';
 
   let isMenuOpen = false;
 
@@ -10,13 +14,8 @@
     isMenuOpen = !isMenuOpen;
   }
 
-  async function handleLoginClick() {
-    try {
-      await authenticateWithInternetIdentity(); // Assume this function authenticates the user
-      navigate('/dashboard'); // Use navigate for client-side routing
-    } catch (error) {
-      console.error("Authentication failed:", error); // Handle authentication failure
-    }
+  function handleSignUpClick() {
+    goto('/experiences');
   }
 
   async function authenticateWithInternetIdentity() {
@@ -213,6 +212,28 @@
 </section>
 
 <!-- Footer -->
+<footer class="bg-gradient-to-r from-[#38a0ac] to-[#ffff] text-[#0f535c] py-6 text-center">
+  <div class="container mx-auto">
+    <p class="mb-4">&copy; 2024 LLMVerse. All rights reserved.</p>
+    <div class="space-x-4 mb-4">
+      <a href="/privacy" class="hover:text-blue-300">Privacy Policy</a>
+      <a href="/terms" class="hover:text-blue-300">Terms of Service</a>
+      <a href="#contact" class="hover:text-blue-300">Contact</a>
+    </div>
+    <div class="space-x-6">
+      <a href="#" class="hover:text-blue-300">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="#" class="hover:text-blue-300">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#" class="hover:text-blue-300">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+
 <footer class="bg-[#023e8a] text-white py-8">
   <div class="container mx-auto text-center">
     <p class="text-sm">© 2024 LLMVerse. All rights reserved.</p>
