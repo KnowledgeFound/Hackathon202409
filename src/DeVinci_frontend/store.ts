@@ -5,11 +5,11 @@ import { StoicIdentity } from "ic-stoic-identity";
 import { AuthClient } from "@dfinity/auth-client";
 import UAParser from 'ua-parser-js';
 import {
-  DeVinci_backend,
+  backend,
   createActor as createBackendCanisterActor,
   canisterId as backendCanisterId,
   idlFactory as backendIdlFactory,
-} from "../declarations/DeVinci_backend";
+} from "../declarations/backend";
 
 //__________Local vs Mainnet Development____________
 /* export const HOST =
@@ -81,7 +81,7 @@ const nanosecondsPerHour = BigInt(3600000000000);
 
 type State = {
   isAuthed: "plug" | "stoic" | "nfid" | "bitfinity" | "internetidentity" | null;
-  backendActor: typeof DeVinci_backend;
+  backendActor: typeof backend;
   principal: Principal;
   accountId: string;
   error: string;
@@ -363,7 +363,7 @@ export const createStore = ({
     const backendActor = (await window.ic?.plug.createActor({
       canisterId: backendCanisterId,
       interfaceFactory: backendIdlFactory,
-    })) as typeof DeVinci_backend;
+    })) as typeof backend;
 
     if (!backendActor) {
       console.warn("couldn't create backend actor");
@@ -448,7 +448,7 @@ export const createStore = ({
       canisterId: backendCanisterId,
       interfaceFactory: backendIdlFactory,
       host,
-    })) as typeof DeVinci_backend;
+    })) as typeof backend;
 
     if (!backendActor) {
       console.warn("couldn't create backend actor");
@@ -585,7 +585,7 @@ declare global {
           whitelist?: string[];
           host?: string;
         }) => Promise<any>;
-        createActor: (options: {}) => Promise<typeof DeVinci_backend>;
+        createActor: (options: {}) => Promise<typeof backend>;
         isConnected: () => Promise<boolean>;
         disconnect: () => Promise<boolean>;
         createAgent: (args?: {
@@ -632,7 +632,7 @@ declare global {
           canisterId: string;
           interfaceFactory: any;
           host?: string;
-        }) => Promise<typeof DeVinci_backend>;
+        }) => Promise<typeof backend>;
         isConnected: () => Promise<boolean>;
         /* disconnect: () => Promise<boolean>;
         createAgent: (args?: {

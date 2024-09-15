@@ -4,6 +4,11 @@ import path from "path";
 import dfxJson from "./dfx.json";
 import fs from "fs";
 import { VitePWA } from "vite-plugin-pwa";
+import environment from "vite-plugin-environment";
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
 
 const isDev = process.env["DFX_NETWORK"] === "local";
 // Get the network name, or `local` by default.
@@ -39,12 +44,7 @@ const aliases = Object.entries(dfxJson.canisters || {}).reduce(
       "canisters",
       name,
     ); */
-    const outputRoot = path.join(
-      __dirname,
-      "src",
-      "declarations",
-      name,
-    );
+    const outputRoot = path.join(__dirname, "src", "declarations", name);
 
     return {
       ...acc,
@@ -59,78 +59,84 @@ const aliases = Object.entries(dfxJson.canisters || {}).reduce(
 const canisterDefinitions = Object.entries(canisterIds).reduce(
   (acc, [key, val]) => ({
     ...acc,
-    [`process.env.${key.toUpperCase()}_CANISTER_ID`]: JSON.stringify(val[networkName]),
-    [`process.env.CANISTER_ID_${key.toUpperCase()}`]: JSON.stringify(val[networkName]),
+    [`process.env.${key.toUpperCase()}_CANISTER_ID`]: JSON.stringify(
+      val[networkName],
+    ),
+    [`process.env.CANISTER_ID_${key.toUpperCase()}`]: JSON.stringify(
+      val[networkName],
+    ),
   }),
   {},
 );
-
-const pwaManifest = {
-  short_name: "DeVinci",
-  name: "DeVinci AI Chat App",
-  description: "Your decentralized AI Chat app served from the Internet Computer and running on your device through the browser.",
-  display: "standalone",
-  scope: "/",
-  start_url: "/",
-  background_color: "#3367D6",
-  theme_color: "#3367D6",
-  icons: [
-    {
-      src: './FutureWebInitiative_img192.png',
-      sizes: '192x192',
-      type: 'image/png',
-    },
-    {
-      src: './FutureWebInitiative_img512.png',
-      sizes: '512x512',
-      type: 'image/png',
-    },
-    {
-      src: './FutureWebInitiative_img512.png',
-      sizes: '512x512',
-      type: 'image/png',
-      purpose: 'any'
-    },
-    {
-      src: './FutureWebInitiative_img512.png',
-      sizes: '512x512',
-      type: 'image/png',
-      purpose: 'maskable'
-    },
-    {
-      src: "./FutureWebInitiative_img.png",
-      type: "image/png",
-      sizes: "721x721"
-    },
-  ],
-};
-
-const pwaOptions = {
-  registerType: 'autoUpdate',
-  manifest: pwaManifest,
-  injectRegister: null,
-  // for own service worker (not auto-generated)
-  strategies: 'injectManifest',
-  srcDir: 'src/DeVinci_frontend',
-  filename: 'service-worker.ts',
-  outDir: './dist/',
-  injectManifest: {
-    //injectionPoint: undefined
-    rollupFormat: 'iife',
-    globPatterns: ['**/*.{js,css,html,ico,png,svg,json,gif}'],
-    maximumFileSizeToCacheInBytes: 50000000, // Increase or decrease based on your needs
-  },
-  devOptions: {
-    enabled: true
-  }
-};
 
 // See guide on how to configure Vite at:
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     svelte(),
-    VitePWA(pwaOptions)
+    VitePWA({
+      registerType: "autoUpdate",
+      manifest: {
+        short_name: "DeVinci",
+        name: "DeVinci AI Chat App",
+        description:
+          "Your decentralized AI Chat app served from the Internet Computer and running on your device through the browser.",
+        display: "standalone",
+        scope: "/",
+        start_url: "/",
+        background_color: "#3367D6",
+        theme_color: "#3367D6",
+        icons: [
+          {
+            src: "./FutureWebInitiative_img192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "./FutureWebInitiative_img512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+          {
+            src: "./FutureWebInitiative_img512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
+            src: "./FutureWebInitiative_img512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+          {
+            src: "./FutureWebInitiative_img.png",
+            type: "image/png",
+            sizes: "721x721",
+          },
+        ],
+      },
+      injectRegister: null,
+      // for own service worker (not auto-generated)
+      strategies: "injectManifest",
+      srcDir: "src/DeVinci_frontend",
+      filename: "service-worker.ts",
+      outDir: "./dist/",
+      injectManifest: {
+        //injectionPoint: undefined
+        rollupFormat: "iife",
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json,gif}"],
+        maximumFileSizeToCacheInBytes: 50000000, // Increase or decrease based on your needs
+      },
+      devOptions: {
+        enabled: true,
+      },
+    }),
+    environment("all", { prefix: "CANISTER_" }),
+    environment("all", { prefix: "DFX_" }),
+    nodeResolve({
+      extensions: [".js", ".ts"],
+    }),
   ],
   build: {
     target: "es2020",

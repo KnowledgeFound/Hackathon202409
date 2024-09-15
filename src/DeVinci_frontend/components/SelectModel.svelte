@@ -1,12 +1,8 @@
-<script>
-  import logo from "../../../public/image8.png";
-  import hero from "../../../public/image9.png";
-  import vr from "../../../public/vr2.png"
-  import eye from "../../../public/image6.png"
-  // import '../index.scss';
-  // import { error } from 'console';
-  //import {goto} from ''
-  // import { authenticateWithInternetIdentity } from '../routes/services/auth';
+<script lang="ts">
+  import { Router, link, navigate } from 'svelte-spa-router';
+ // import routes from './routes'; // Ensure this file correctly exports your routes
+  import logo from '../assets/devinci.svg';
+  import hero from '../assets/apple-touch-icon.png'; // Example image for hero section
 
   let isMenuOpen = false;
 
@@ -14,14 +10,20 @@
     isMenuOpen = !isMenuOpen;
   }
 
-  function handleSignUpClick() {
-    goto("/experiences");
+  async function handleLoginClick() {
+    try {
+      await authenticateWithInternetIdentity(); // Assume this function authenticates the user
+      navigate('/dashboard'); // Use navigate for client-side routing
+    } catch (error) {
+      console.error("Authentication failed:", error); // Handle authentication failure
+    }
   }
 
-  function handleLoginClick() {
-    // authenticateWithInternetIdentity().catch((error) => {
-    // console.error("Authentication failed:", error);
-    // });
+  async function authenticateWithInternetIdentity() {
+    // Your actual authentication logic here
+    return new Promise((resolve) => {
+      setTimeout(resolve, 1000); // Simulate a delay
+    });
   }
 
   const items = [
@@ -62,37 +64,30 @@
   class="bg-gradient-to-r from-[#0f535c] to-[#38a0ac] text-white py-4 px-6 flex flex-col md:flex-row items-center justify-between shadow-lg fixed top-0 w-full z-50"
 >
   <div class="flex items-center space-x-4 w-full md:w-auto">
-    <a href="/" class="flex items-center space-x-2">
-      <img
-        src={logo}
-        alt="LLM Logo"
-        class="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-4 border-blue-200 transition-transform transform hover:scale-110 duration-300"
-      />
-      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold">Anti-Corrupt AI</h1>
+    <a use:link href="/" class="flex items-center space-x-2">
+      <img src={logo} alt="LLM Logo" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-4 border-blue-200 transition-transform transform hover:scale-110 duration-300" />
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold">LLMVerse</h1>
     </a>
   </div>
 
   <!-- Center Links (Desktop) -->
   <nav class="hidden md:flex flex-grow justify-center space-x-6 mt-4 md:mt-0">
-    {#each ["Overview", "Features", "Courses", "Contact"] as link}
-      <a
-        href="#{link.toLowerCase()}"
-        class="text-white hover:text-blue-300 border-b-2 border-transparent hover:border-white px-4 py-2 transition-all duration-300"
-        >{link}</a
-      >
+    {#each ['Overview', 'Features', 'Integrations', 'Contact'] as link}
+      <a use:link href="#{link.toLowerCase()}" class="text-white hover:text-blue-300 border-b-2 border-transparent hover:border-white px-4 py-2 transition-all duration-300">{link}</a>
     {/each}
   </nav>
 
   <!-- Right Section Buttons -->
   <div class="flex space-x-4 mt-4 md:mt-0">
-    <button
-      class="bg-[#0f535c] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#0077b6] transition-all duration-300 transform hover:scale-105"
-    
-    >
-    <button
-      class="bg-transparent border border-blue-200 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-300 hover:text-[#023e8a] transition-all duration-300 transform hover:scale-105"
-      >Rewards🤝</button
-    >
+    <button 
+      on:click={handleLoginClick}
+      class="bg-[#023e8a] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#0077b6] transition-all duration-300 transform hover:scale-105">
+      Get Started 🚀
+    </button>
+    <button 
+      class="bg-transparent border border-blue-200 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-300 hover:text-[#023e8a] transition-all duration-300 transform hover:scale-105">
+      Partner with Us 🤝
+    </button>
   </div>
 </header>
 
@@ -116,17 +111,10 @@
       </p>
       <!-- Styled Buttons -->
       <div class="flex justify-center md:justify-start space-x-4">
-        <button
-          on:click={handleSignUpClick}
-          class="bg-[#E1AD01] text-white px-11 py-2 text-lg font-semibold shadow-lg hover:bg-white hover:text-[#0077b6] transition-all duration-300 ease-in-out transform hover:scale-105"
-        >
-          Sign Up
-        </button>
-        <button
+        <button 
           on:click={handleLoginClick}
-          class="bg-transparent border-2 border-white text-white px-11 py-2 text-lg font-semibold shadow-lg hover:bg-white hover:text-[#0077b6] transition-all duration-300 ease-in-out transform hover:scale-105"
-        >
-          Login
+          class="bg-[#00C4CC] text-white px-11 py-2 text-lg font-semibold shadow-lg hover:bg-white hover:text-[#0077b6] transition-all duration-300 ease-in-out transform hover:scale-105">
+          Go to learning
         </button>
       </div>
     </div>
@@ -207,37 +195,26 @@
   class="section-padding bg-gradient-to-r from-[#38a0ac] to-[#fff] py-16"
 >
   <div class="container mx-auto text-center">
-    <h2 class="text-4xl font-bold text-text-gray-700 mb-8">
-      Licensing Opportunities
-    </h2>
-    <p class="text-gray-600 mb-12 max-w-3xl mx-auto">
-      Maximize your intellectual property value with licensing solutions from
-      LLMVerse. Flexible, scalable models for every industry.
+    <h2 class="text-4xl font-bold text-[#023e8a] mb-8">Licensing Opportunities</h2>
+    <p class="text-gray-600 mb-12 max-w-2xl mx-auto">
+      Explore licensing options to bring LLMVerse's advanced capabilities to your organization. Contact us to discuss tailored solutions.
     </p>
+  </div>
+</section>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Licensing cards will go here -->
-    </div>
+<!-- Contact Us Section -->
+<section id="contact" class="section-padding bg-[#023e8a] text-white py-16">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold mb-6">Contact Us</h2>
+    <p class="text-lg mb-6">Have questions or want to partner with us? Get in touch with our team for more information.</p>
+    <p class="text-lg mb-6">Email: <a href="mailto:info@llmverse.com" class="underline">info@llmverse.com</a></p>
+    <p class="text-lg">Phone: <a href="tel:+1234567890" class="underline">+1 (234) 567-890</a></p>
   </div>
 </section>
 
 <!-- Footer -->
-<footer
-  class="bg-gradient-to-r from-[#38a0ac] to-[#ffff] text-[#0f535c] py-6 text-center"
->
-  <div class="container mx-auto">
-    <p class="mb-4">&copy; 2024 LLMVerse. All rights reserved.</p>
-    <div class="space-x-4 mb-4">
-      <a href="/privacy" class="hover:text-blue-300">Privacy Policy</a>
-      <a href="/terms" class="hover:text-blue-300">Terms of Service</a>
-      <a href="#contact" class="hover:text-blue-300">Contact</a>
-    </div>
-    <div class="space-x-6">
-      <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook"></i></a
-      >
-      <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter"></i></a>
-      <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin"></i></a
-      >
-    </div>
+<footer class="bg-[#023e8a] text-white py-8">
+  <div class="container mx-auto text-center">
+    <p class="text-sm">© 2024 LLMVerse. All rights reserved.</p>
   </div>
 </footer>

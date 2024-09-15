@@ -1,12 +1,12 @@
 {
   "canisters": {
-    "DeVinci_backend": {
-      "main": "src/DeVinci_backend/main.mo",
+    "backend": {
+      "main": "src/backend/main.mo",
       "type": "motoko"
     },
     "DeVinci_frontend": {
       "dependencies": [
-        "DeVinci_backend"
+        "backend"
       ],
       "frontend": {
         "entrypoint": "dist/index.html"
