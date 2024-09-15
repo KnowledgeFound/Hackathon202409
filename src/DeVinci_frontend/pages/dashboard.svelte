@@ -14,11 +14,11 @@
       goto('/signup'); // Navigate to the signup page
     }
   
-    function handleLoginClick() {
+   /*  function handleLoginClick() {
       authenticateWithInternetIdentity().catch((error) => {
         console.error("Authentication failed:", error);
       });
-    }
+    } */
   
     const items = [
       {

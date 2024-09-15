@@ -71,19 +71,25 @@
 
   <!-- Center Links (Desktop) -->
   <nav class="hidden md:flex flex-grow justify-center space-x-6 mt-4 md:mt-0">
-    {#each ['Overview', 'Features', 'Integrations', 'Contact'] as link}
-      <a use:link href="#{link.toLowerCase()}" class="text-white hover:text-blue-300 border-b-2 border-transparent hover:border-white px-4 py-2 transition-all duration-300">{link}</a>
+    {#each ['Courses', 'Chatbots','Quizzes', 'Contact'] as link}
+      <a
+        on:click={() => handleNavClick(link.toLowerCase())}
+        class="text-white hover:text-blue-300 border-b-2 border-transparent hover:border-white px-4 py-2 transition-all duration-300 cursor-pointer"
+      >
+        {link}
+      </a>
     {/each}
   </nav>
 
   <!-- Right Section Buttons -->
   <div class="flex space-x-4 mt-4 md:mt-0">
     <button 
-      on:click={handleLoginClick}
+      on:click={() => handleNavClick('courses')}
       class="bg-[#023e8a] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#0077b6] transition-all duration-300 transform hover:scale-105">
       Get Started 🚀
     </button>
     <button 
+      on:click={() => handleNavClick('partner')}
       class="bg-transparent border border-blue-200 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-300 hover:text-[#023e8a] transition-all duration-300 transform hover:scale-105">
       Partner with Us 🤝
     </button>
@@ -201,15 +207,34 @@
   </div>
 </section>
 
-<!-- Contact Us Section -->
-<section id="contact" class="section-padding bg-[#023e8a] text-white py-16">
-  <div class="container mx-auto text-center">
-    <h2 class="text-4xl font-bold mb-6">Contact Us</h2>
-    <p class="text-lg mb-6">Have questions or want to partner with us? Get in touch with our team for more information.</p>
-    <p class="text-lg mb-6">Email: <a href="mailto:info@llmverse.com" class="underline">info@llmverse.com</a></p>
-    <p class="text-lg">Phone: <a href="tel:+1234567890" class="underline">+1 (234) 567-890</a></p>
-  </div>
-</section>
+  <!-- Contact Section -->
+   <div>
+  <section id="contact" class="py-16 bg-gray-50" class:hidden={activeSection !== 'contact'}>
+    <div class="container mx-auto text-center">
+      <h2 class="text-4xl font-extrabold text-[#0f535c] mb-8">Get in Touch</h2>
+      <p class="text-gray-600 mb-12 text-lg max-w-2xl mx-auto">If you have any questions or need assistance, feel free to reach out to us!</p>
+      <form class="max-w-2xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div>
+            <label for="name" class="block text-left font-semibold mb-2">Name</label>
+            <input type="text" id="name" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Your Name">
+          </div>
+          <div>
+            <label for="email" class="block text-left font-semibold mb-2">Email</label>
+            <input type="email" id="email" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Your Email">
+          </div>
+        </div>
+        <div>
+          <label for="message" class="block text-left font-semibold mb-2">Message</label>
+          <textarea id="message" rows="4" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Your Message"></textarea>
+        </div>
+        <button type="submit" class="mt-6 bg-[#0f535c] text-white py-2 px-6 rounded-lg hover:bg-[#023e8a] transition-colors duration-300">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+</div>
 
 <!-- Footer -->
 <footer class="bg-gradient-to-r from-[#38a0ac] to-[#ffff] text-[#0f535c] py-6 text-center">
