@@ -1,114 +1,89 @@
 <script>
-  import { location, push } from 'svelte-spa-router';
-  import {
-    store,
-    activeChatGlobal
-  } from "../store";
+  import { push } from 'svelte-spa-router'; // Import push from svelte-spa-router
+  import logo from '../assets/devinci.svg';
+  import hero from '../assets/apple-touch-icon.png';
 
-  import ChatHistory from "./ChatHistory.svelte";
+  let isMenuOpen = false;
 
-  import devincilogo from "/devinci-logo.svg";
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+  }
 
-  import { userHasDownloadedModel } from "../helpers/localStorage";
+  // Function to navigate to the login page using push
+  function navigateToLogin() {
+    push('/login'); // Navigate to the /login page
+  }
 
-  // Reactive statement to check if the user has already downloaded at least one AI model
-  $: userHasDownloadedAtLeastOneModel = userHasDownloadedModel();
-
-  // User can select between chats (global variable is kept)
-  async function showNewChat() {
-    if ($activeChatGlobal !== null) {
-      $activeChatGlobal = null;
-    } else {
-      $activeChatGlobal = false;
-    };
-    if ($location !== "/") {
-      push('/');
-    };
-    return;
-  };
-
+  function handleLoginClick() {
+    // Placeholder for additional login handling if needed
+    navigateToLogin();
+  }
 </script>
 
-<div class="flex flex-col justify-center w-full items-center">
-  <a href="/">
-      <img src={devincilogo} class="rotating-image w-16 h-16 p-0 rounded-full" alt="devinci logo" />
-  </a>
-  {#if userHasDownloadedAtLeastOneModel}
-    <button type="button" on:click={showNewChat} class="disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-800 mr-auto w-full my-5 flex justify-center text-gray-800 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-full text-xs px-3 py-1.5 text-center">
-      New chat
+<header class="bg-gradient-to-r from-[#00b4d8] to-[#0f4c75] text-white py-4 px-6 flex flex-col md:flex-row items-center justify-between shadow-lg fixed top-0 w-full z-50">
+  <div class="flex items-center space-x-4 w-full md:w-auto">
+    <a href="/" class="flex items-center space-x-2">
+      <img src={logo} alt="LLM Logo" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-4 border-blue-200 transition-transform transform hover:scale-110 duration-300" />
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold">LLMVerse</h1>
+    </a>
+  </div>
+
+  <nav class="hidden md:flex flex-grow justify-center space-x-6 mt-4 md:mt-0">
+    {#each ['Overview', 'Features', 'Integrations', 'Contact'] as link}
+      <a href="#{link.toLowerCase()}" class="text-white hover:text-blue-300 border-b-2 border-transparent hover:border-white px-4 py-2 transition-all duration-300">{link}</a>
+    {/each}
+  </nav>
+
+  <div class="flex space-x-4 mt-4 md:mt-0">
+    <button class="bg-[#023e8a] text-white px-4 py-2 rounded-full shadow-md hover:bg-[#0077b6] transition-all duration-300 transform hover:scale-105">Get Started 🚀</button>
+    <button 
+      on:click={handleLoginClick} 
+      class="bg-transparent border border-blue-200 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-300 hover:text-[#023e8a] transition-all duration-300 transform hover:scale-105">
+      Login
     </button>
-  {:else}
-    <button disabled aria-label="Choose a model first." type="button" class="tooltip-toggle disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-800 mr-auto w-full my-5 flex justify-center text-gray-800 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-full text-xs px-3 py-1.5 text-center">
-      New chat
-    </button>
-  {/if}
-  {#if $store.isAuthed}
-    <!--
-    --- Show when user is logged and has saved chats
-    -->
-    <ChatHistory bind:selectedChat={$activeChatGlobal} />
-  {/if}
-</div>
+  </div>
+</header>
 
-<style>
-	.group:hover .delete-btn {
-		display: flex;
-	}
+<section class="hero min-h-screen flex items-center justify-center bg-[#0077b6] text-white">
+  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-8">
+    <div class="text-content md:w-1/2 text-center md:text-left">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+        Empower Your Business with <span class="text-[#00C4CC]">LLMVerse</span>
+      </h1>
+      <p class="text-lg md:text-xl mb-6">
+        Unlock the potential of large language models for enhanced customer engagement, automation, and data insights.
+      </p>
+      <div class="flex justify-center md:justify-start space-x-4">
+        <button 
+          class="bg-[#00C4CC] text-white px-11 py-2 text-lg font-semibold shadow-lg hover:bg-white hover:text-[#0077b6] transition-all duration-300 ease-in-out transform hover:scale-105">
+          Sign Up
+        </button>
+        <button 
+          on:click={handleLoginClick} 
+          class="bg-transparent border-2 border-white text-white px-11 py-2 text-lg font-semibold shadow-lg hover:bg-white hover:text-[#0077b6] transition-all duration-300 ease-in-out transform hover:scale-105">
+          Login
+        </button>
+      </div>
+    </div>
 
-  @keyframes rotate {
-	  from {
-		  transform: rotate(0deg);
-	  }
-	  to {
-		  transform: rotate(360deg);
-	  }
-  }
+    <div class="image-content md:w-1/2 mt-8 md:mt-0">
+      <img src={hero} alt="LLM Hero Graphic" class="w-full h-auto rounded-lg" />
+    </div>
+  </div>
+</section>
 
-  .rotating-image {
-	  width: 64px; /* w-16 in Tailwind CSS */
-	  height: 64px; /* h-16 in Tailwind CSS */
-	  padding: 0; /* p-0 in Tailwind CSS */
-	  border-radius: 50%; /* rounded-full in Tailwind CSS */
-	  animation: rotate 360s linear infinite;
-  }
-
-  .tooltip-toggle {
-	  cursor: pointer;
-	  position: relative;
-  }
-  .tooltip-toggle::before {
-	  position: absolute;
-	  top: -60px;
-	  left: 0;
-	  background-color: #2B222A;
-	  border-radius: 5px;
-	  color: #fff;
-	  content: attr(aria-label);
-	  padding: 0.7rem;
-	  text-transform: none;
-	  transition: all 0.5s ease;
-	  width: 140px;
-  }
-  .tooltip-toggle::after {
-	  position: absolute;
-	  top: -12px;
-	  left: 9px;
-	  content: " ";
-	  font-size: 0;
-	  line-height: 0;
-	  margin-left: -5px;
-	  width: 0;
-  }
-  .tooltip-toggle::before, .tooltip-toggle::after {
-	  color: #efefef;
-	  font-family: monospace;
-	  font-size: 12px;
-	  opacity: 0;
-	  pointer-events: none;
-	  text-align: center;
-  }
-  .tooltip-toggle:focus::before, .tooltip-toggle:focus::after, .tooltip-toggle:hover::before, .tooltip-toggle:hover::after {
-	  opacity: 1;
-	  transition: all 0.75s ease;
-  }
-</style>
+<footer class="bg-[#023e8a] text-white py-6 text-center">
+  <div class="container mx-auto">
+    <p class="mb-4">&copy; 2024 LLMVerse. All rights reserved.</p>
+    <div class="space-x-4 mb-4">
+      <a href="/privacy" class="hover:text-blue-300">Privacy Policy</a>
+      <a href="/terms" class="hover:text-blue-300">Terms of Service</a>
+      <a href="#contact" class="hover:text-blue-300">Contact</a>
+    </div>
+    <div class="space-x-6">
+      <a href="#" class="hover:text-blue-300"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="hover:text-blue-300"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="hover:text-blue-300"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+</footer>
