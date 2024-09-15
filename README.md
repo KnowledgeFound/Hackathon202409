@@ -1,6 +1,6 @@
 # DeVinci
 
-DeVinci is live on the Internet Computer. If you like, you can give it a try [here](https://x6occ-biaaa-aaaai-acqzq-cai.icp0.io/).
+DeVinci is live on the Internet Computer. If you like, you can give it a try [here](https://px7id-byaaa-aaaak-albiq-cai.icp0.io/).
 
 ## Design
 
