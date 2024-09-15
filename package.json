@@ -10,18 +10,18 @@
     "Canister"
   ],
   "scripts": {
-    "build": "vite",
+    "build": "vite build",
     "dev": "npm run replica && npm run deploy",
     "replica": "dfx stop && dfx start --background",
     "erase-replica": "npm run fresh-replica && npm run deploy",
     "fresh-replica": "dfx stop && rm -rf .dfx && dfx start --clean --background",
-    "generate": "dfx generate DeVinci_backend",
+    "generate": "dfx generate backend",
     "vite": "vite --port 3000",
     "serve": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "stop": "dfx stop",
-    "deploy": "dfx deploy DeVinci_backend --network=local",
-    "deploy:ic": "dfx deploy DeVinci_backend --network=ic",
+    "deploy": "dfx deploy backend --network=local",
+    "deploy:ic": "dfx deploy backend --network=ic",
     "test": "vitest"
   },
   "dependencies": {

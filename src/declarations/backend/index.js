@@ -1,13 +1,19 @@
 import { Actor, HttpAgent } from "@dfinity/agent";
-import canisterIds from "../../.dfx/local/canister_ids.json";
-import fetch from "isomorphic-fetch";
-import { idlFactory } from "../declarations/backend/backend.did";
 
-export const CANISTER_ID = canisterIds.backend.local;
-console.log("CANISTER_ID", CANISTER_ID);
+// Imports and re-exports candid interface
+import { idlFactory } from "./backend.did.js";
+export { idlFactory } from "./backend.did.js";
+
+/* CANISTER_ID is replaced by webpack based on node environment
+ * Note: canister environment variable will be standardized as
+ * process.env.CANISTER_ID_<CANISTER_NAME_UPPERCASE>
+ * beginning in dfx 0.15.0
+ */
+export const canisterId =
+  process.env.CANISTER_ID_BACKEND;
 
 export const createActor = (canisterId, options = {}) => {
-  const agent = options.agent || HttpAgent.createSync({ ...options.agentOptions });
+  const agent = options.agent || new HttpAgent({ ...options.agentOptions });
 
   if (options.agent && options.agentOptions) {
     console.warn(
@@ -33,6 +39,4 @@ export const createActor = (canisterId, options = {}) => {
   });
 };
 
-export const actor = createActor(CANISTER_ID, {
-  agentOptions: { host: "http://127.0.0.1:4943", fetch },
-});
+export const backend = canisterId ? createActor(canisterId) : undefined;
