@@ -2,6 +2,8 @@
 
 DeVinci is live on the Internet Computer. If you like, you can give it a try [here](https://px7id-byaaa-aaaak-albiq-cai.icp0.io/).
 
+[Backend Canister](https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/?id=pq6ox-maaaa-aaaak-albia-cai)
+
 ## Design
 
 Checkout the [design](https://miro.com/app/board/uXjVLfeaOGQ=/?share_link_id=752667331634) for the project on Miro.
