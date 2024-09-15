@@ -1,40 +1,27 @@
-import List "mo:base/List";
 import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Iter "mo:base/Iter";
 import Nat "mo:base/Nat";
-import Nat16 "mo:base/Nat16";
 import Nat32 "mo:base/Nat32";
-import Nat64 "mo:base/Nat64";
 import Time "mo:base/Time";
 import Int "mo:base/Int";
-import Char "mo:base/Char";
-import AssocList "mo:base/AssocList";
 import Buffer "mo:base/Buffer";
-import Random "mo:base/Random";
-import RBTree "mo:base/RBTree";
 import HashMap "mo:base/HashMap";
 import Array "mo:base/Array";
-
-import FileTypes "./types/FileStorageTypes";
-import Utils "./Utils";
-
-import Types "./Types";
-
-import Protocol "./Protocol";
-import Blob "mo:base/Blob";
-
-import Float "mo:base/Float";
-import Request "request";
-import Map "mo:map/Map";
-import { hash } "mo:base/Hash";
-import { thash } "mo:map/Map";
-import Vector "mo:vector";
+import Nat64 "mo:base/Nat64";
 import Error "mo:base/Error";
 import Debug "mo:base/Debug";
+import { recurringTimer } = "mo:base/Timer";
+
+import Utils "./Utils";
+import Types "./Types";
+import Request "request";
+
+import Map "mo:map/Map";
+import { thash } "mo:map/Map";
+import Vector "mo:vector";
 import JSON "mo:json.mo";
 import ICRC1 "mo:icrc1-types";
-import { recurringTimer } = "mo:base/Timer";
 import Prng "mo:prng";
 
 shared ({ caller }) actor class Backend() {
@@ -1683,29 +1670,17 @@ shared ({ caller }) actor class Backend() {
 
   // Function for custodian to get all email subscribers
   public shared query ({ caller }) func get_email_subscribers() : async [(Text, Types.EmailSubscriber)] {
-    // don't allow anonymous Principal
-    if (Principal.isAnonymous(caller)) {
-      return [];
-    };
-    // Only Principals registered as custodians can access this function
-    if (List.some(custodians, func(custodian : Principal) : Bool { custodian == caller })) {
-      return Iter.toArray(emailSubscribersStorage.entries());
-    };
-    return [];
+    // Only Principals registered in acl can access this function
+    if (not _isAllowed(caller)) return [];
+    return Iter.toArray(emailSubscribersStorage.entries());
   };
 
   // Function for custodian to delete an email subscriber
   public shared ({ caller }) func delete_email_subscriber(emailAddress : Text) : async Bool {
-    // don't allow anonymous Principal
-    if (Principal.isAnonymous(caller)) {
-      return false;
-    };
-    // Only Principals registered as custodians can access this function
-    if (List.some(custodians, func(custodian : Principal) : Bool { custodian == caller })) {
-      emailSubscribersStorage.delete(emailAddress);
-      return true;
-    };
-    return false;
+    // Only Principals registered in acl can access this function
+    if (not _isAllowed(caller)) return false;
+    emailSubscribersStorage.delete(emailAddress);
+    return true;
   };
 
   // AI-for-education experiences (Knowledge Foundation hackathon)

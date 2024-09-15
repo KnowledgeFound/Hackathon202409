@@ -16,7 +16,7 @@ module {
     id : Text;
     principal : ?Principal;
     fullname : Text;
-    claimableTokens : Nat;
+    var claimableTokens : Nat;
     enrolledCourses : Vector<EnrolledCourse>;
   };
 
