@@ -2,6 +2,23 @@
 
 DeVinci is live on the Internet Computer. If you like, you can give it a try [here](https://x6occ-biaaa-aaaai-acqzq-cai.icp0.io/).
 
+## Design
+
+Checkout the [design](https://miro.com/app/board/uXjVLfeaOGQ=/?share_link_id=752667331634) for the project on Miro.
+
+### Goals
+
+Better User Experience. We decided to go with the approach of using on offchain AI model because it's faster and more efficient. The user can interact with the AI model in real-time without too much delay. The AI model is pre-trained with the UNODC materails using Vector embeddings and stored off-chain.
+
+The goal of this project is to create a decentralized AI chatbot that can be used by anyone to learn about corruption. The AI chatbot will be able to answer questions about any course and also provide quizzes for users to test their knowledge.
+
+1. Ensure users can interact with the AI model in a decentralized manner.
+2. User's don't need to log in to use the AI model to learn.
+3. User's chats are stored on the canister ensuring they can always continue from where they left off.
+4. Users can access their knowledge about any course by taking a quiz.
+5. User's with internet identity will earn knowledge tokens for passing a quiz 100%.
+6. If a user does not have an internet identity, they tokens earned will be placed on the canister which they can claim when they login with their internet identity anytime.
+
 **Notes**:
 
 - Currently, only Chrome and Edge on desktop support the required features (WebGPU). Other devices, including smartphones, and other browsers, cannot run it (for now).
@@ -121,7 +138,25 @@ Alternative: Run a local vite UI
 npm run vite
 ```
 
-### 6: Deployment to the Internet Computer mainnet
+### Running tests
+
+To run the tests, use the following command:
+
+```bash
+mops test
+```
+
+This uses `mops test` package to run the tests. Unit tests only.
+
+To run `e2e` tests, use the following command:
+
+```bash
+npm run test
+```
+
+This uses vitest to run the tests. End-to-end tests only.
+
+### Deployment to the Internet Computer mainnet
 
 Deploy the code as canisters to the live IC where it's accessible via regular Web browsers.
 
