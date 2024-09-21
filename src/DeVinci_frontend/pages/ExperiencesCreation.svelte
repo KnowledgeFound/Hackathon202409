@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="block p-6 bg-white border border-gray-200 rounded-lg shadow my-4">
                 <p class="font-semibold text-lg text-gray-700">
                   Your PR should only include a new entry in the array for the experiences here:
-                  <a href="https://github.com/Knowledge-Foundation/Hackathon202409/blob/77547fe5d6697a40d5b41d2597ab1ab4c34b57b1/src/DeVinci_backend/main.mo#L472" target="_blank" class="inline-flex items-center font-medium text-blue-600 hover:underline">
+                  <a href="https://github.com/Knowledge-Foundation/Hackathon202409/blob/77547fe5d6697a40d5b41d2597ab1ab4c34b57b1/src/backend/main.mo#L472" target="_blank" class="inline-flex items-center font-medium text-blue-600 hover:underline">
                     Line in codebase
                     <svg class="w-4 h-4 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="font-normal text-lg text-gray-700">
                   Please take a look at the existing entries in the array to get an idea of your entry's format and at the type definition for explanations on each of the field.
                 </p>
-                <a href="https://github.com/Knowledge-Foundation/Hackathon202409/blob/77547fe5d6697a40d5b41d2597ab1ab4c34b57b1/src/DeVinci_backend/Types.mo#L184" target="_blank" class="inline-flex items-center font-medium text-blue-600 hover:underline">
+                <a href="https://github.com/Knowledge-Foundation/Hackathon202409/blob/77547fe5d6697a40d5b41d2597ab1ab4c34b57b1/src/backend/Types.mo#L184" target="_blank" class="inline-flex items-center font-medium text-blue-600 hover:underline">
                   Type definition
                   <svg class="w-4 h-4 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

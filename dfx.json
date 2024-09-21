@@ -1,12 +1,12 @@
 {
   "canisters": {
-    "DeVinci_backend": {
-      "main": "src/DeVinci_backend/main.mo",
+    "backend": {
+      "main": "src/backend/main.mo",
       "type": "motoko"
     },
     "DeVinci_frontend": {
       "dependencies": [
-        "DeVinci_backend"
+        "backend"
       ],
       "frontend": {
         "entrypoint": "dist/index.html"
@@ -17,24 +17,14 @@
       ],
       "type": "assets"
     },
-    "internet_identity": {
-      "type": "custom",
-      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
-      "wasm": "https://github.com/dfinity/internet-identity/releases/download/release-2023-04-12/internet_identity_dev.wasm.gz",
-      "shrink": false,
-      "remote": {
-        "candid": "internet_identity.did",
-        "id": {
-          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai",
-          "testing": "rdmx6-jaaaa-aaaaa-aaadq-cai",
-          "development": "rdmx6-jaaaa-aaaaa-aaadq-cai"
-        }
-      }
+    "internet-identity": {
+      "type": "pull",
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
     }
   },
   "defaults": {
     "build": {
-      "packtool": "vessel sources",
+      "packtool": "mops sources",
       "args": ""
     }
   },
@@ -52,5 +42,6 @@
       "type": "persistent"
     }
   },
+  "output_env_file": ".env",
   "version": 1
 }

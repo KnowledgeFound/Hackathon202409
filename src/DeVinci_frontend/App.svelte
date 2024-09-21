@@ -1,38 +1,34 @@
 <script lang="ts">
-  import Router from "svelte-spa-router";
-  import { onMount } from "svelte";
-  import { store } from "./store";
+  import { Router, Route } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
+  import { store } from './store'; // Ensure your store is correctly set up
 
-  // import UserChatsOverview from "./pages/UserChatsOverview.svelte";
-  import UserSettings from "./pages/UserSettings.svelte";
-  import About from "./pages/About.svelte";
-  import Brand from "./pages/Brand.svelte";
-  import NotFound from "./pages/NotFound.svelte";
-  import deVinci from "./pages/deVinci.svelte";
-  import ExperiencesSelection from "./pages/ExperiencesSelection.svelte";
-  import ExperiencesCreation from "./pages/ExperiencesCreation.svelte";
+  import Login from './pages/Login.svelte';
+  import SignUp from './pages/SignUp.svelte';
+  import LandingPage from './pages/LandingPage.svelte';
+  import Dashboard from './pages/dashboard.svelte'; // Ensure this path and import are correct
 
-  import { syncLocalChanges } from "./helpers/localStorage";
+  // Import any additional pages/components if necessary
+  // import Brand from './pages/Brand.svelte'; // Ensure this import is correct
+  // import About from './pages/About.svelte'; // Ensure this import is correct
+
+  import { syncLocalChanges } from './helpers/localStorage';
 
   const routes = {
-    // Exact path (with /# in front of route, e.g. .../#/about)
-    "/": deVinci,
-    //"/mychats": UserChatsOverview, TODO
-    "/settings": UserSettings,
-    "/about": About,
-    "/brand": Brand,
-    "/experiences": ExperiencesSelection, 
-    "/experiences/create": ExperiencesCreation,
-    // Catch-all (this is optional, but if present it must be the last)
-    "*": NotFound,
+    '/': LandingPage,
+    '/login': Login,
+    '/signup': SignUp,
+    '/dashboard': Dashboard,
+    // Define additional routes if necessary
+    // '/about': About,
+    // '/brand': Brand,
   };
 
   onMount(async () => {
-    // Check login state
     await store.checkExistingLoginAndConnect();
     if ($store.isAuthed) {
-      syncLocalChanges(); // Sync any local changes (from offline usage), only works if back online
-    };
+      syncLocalChanges(); // Sync any local changes
+    }
   });
 </script>
 

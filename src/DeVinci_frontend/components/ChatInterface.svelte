@@ -204,7 +204,7 @@
   };
 </script>
 
-<div id="chatinterface" class="flex flex-col p-4 pb-24 max-w-3xl mx-auto w-full">
+<div id="chatinterface" class="">
   {#if !$chatModelIdInitiatedGlobal}
     <SelectModel onlyShowDownloadedModels={true} autoInitiateSelectedModel={true}/>
   {:else if isChatBoxReady}
